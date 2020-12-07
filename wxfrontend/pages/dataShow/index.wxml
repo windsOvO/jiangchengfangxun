@@ -1,0 +1,25 @@
+<!--pages/dataShow/index.wxml-->
+<view class="dataShow-wrapper">
+    <view class="title">
+        <text class="text">数据总览</text>
+        <image 
+            class="loading"
+            mode="widthFix"
+            style="width:30%"
+            src="../../resource/icon/loading.png"
+        ></image>
+    </view>
+    <image 
+        class="calendar"
+        mode="widthFix"
+        style="width:4%"
+        src="../../resource/icon/calendar.png"
+    ></image>
+    <text class="date">{{time}}</text>
+</view>
+
+<!--eacharts-->
+<view class="dataShow-main">
+    
+</view>
+

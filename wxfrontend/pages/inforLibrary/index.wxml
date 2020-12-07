@@ -1,0 +1,37 @@
+<!--pages/inforLibrary/index.wxml-->
+<view class="infor-wrapper">
+    <view class="title">
+        <text class="text">防汛信息库</text>
+        <image 
+            class="loading"
+            mode="widthFix"
+            style="width:30%"
+            src="../../resource/icon/loading.png"
+        ></image>
+    </view>
+    <image 
+        class="calendar"
+        mode="widthFix"
+        style="width:4%"
+        src="../../resource/icon/calendar.png"
+    ></image>
+    <text class="date">{{time}}</text>
+</view>
+
+<view class="infor-card">
+    <text class="num1">{{organizationNum}}</text>
+    <text class="num2">{{dangerNum}}</text>
+    <text class="num3">{{resourceNum}}</text>
+    <text class="text1">防汛组织</text>
+    <text class="text2">隐患险情</text>
+    <text class="text3">资源点</text>
+    <view class="search-bar">
+    
+    </view>
+</view>
+
+
+<view class="dataShow-main">
+    
+</view>
+

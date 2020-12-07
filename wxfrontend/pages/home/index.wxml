@@ -1,0 +1,71 @@
+<!--pages/home/index.wxml-->
+<view class="home-wrapper">
+    <image 
+        class="calendar"
+        mode="widthFix"
+        style="width:4%"
+        src="../../resource/icon/calendar.png"
+    ></image>
+    <text class="date">{{time}}</text>
+
+    <view bindtap="btHomepageChange" data-index='map'>
+        <image 
+        class="logo1"
+        mode="widthFix"
+        style="width:7%"
+        src="../../resource/icon/map.png"
+        ></image>
+        <text class="text_logo1">防汛地图</text>
+    </view>
+    <view wx:if="{{homeIndex==='map'}}">
+      <image 
+          class="triangle1"
+          mode="widthFix"
+          style="width:5%"
+          src="../../resource/icon/triangle.png"
+      ></image>
+    </view>
+    
+    <view bindtap="btHomepageChange" data-index='predict'>
+        <image 
+        class="logo2"
+        mode="widthFix"
+        style="width:8%"
+        src="../../resource/icon/predict.png"
+        ></image>
+        <text class="text_logo2">汛情预测</text>
+    </view>
+    <view wx:if="{{homeIndex==='predict'}}">
+        <image 
+        class="triangle2"
+        mode="widthFix"
+        style="width:5%"
+        src="../../resource/icon/triangle.png"
+        ></image>
+    </view>
+  
+    <view bindtap="btHomepageChange" data-index='water'>
+        <image 
+        class="logo3"
+        mode="widthFix"
+        style="width:8%"
+        src="../../resource/icon/waterLevel.png"
+        ></image>
+        <text class="text_logo3">水位数据</text>
+    </view>
+    <view wx:if="{{homeIndex==='water'}}">
+      <image 
+        class="triangle3"
+        mode="widthFix"
+        style="width:5%"
+        src="../../resource/icon/triangle.png"
+      ></image>
+    </view>
+</view>
+
+<!--eacharts-->
+<view class="login-main">
+    
+</view>
+
+
