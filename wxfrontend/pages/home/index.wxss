@@ -124,7 +124,7 @@ page {
 }
 .eachartsMain .num1 {
   font-size:20px;
-  color:#FFE4C4;
+  color:#3656E6;
   font-weight:bold;
   position: absolute;
   top:18%;
@@ -142,7 +142,7 @@ page {
 }
 .eachartsMain .num3 {
   font-size:20px;
-  color: #00FFFF;
+  color: #e8850d;
   font-weight:bold;
   position: absolute;
   top:18%;
