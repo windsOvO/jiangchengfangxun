@@ -1,12 +1,14 @@
 // pages/home/index.js
+import * as echarts from '../../ec-canvas/echarts';
 var util_time=require("../../utils/time.js");
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    homeIndex:'map'
+    homeIndex:'map',
   },
 
   /**
@@ -78,5 +80,79 @@ Page({
       homeIndex:e.currentTarget.dataset.index
     });
     //调用接口：传递homeIndex参数，返回页面所需要的数据
+    if(this.data.homeIndex==='water'){
+      this.setData({
+        ecMainWater: {
+          onInit: this.initChart
+        },
+        MainWaterX: ['周一', '周二', '周三']
+      })
+    }
+  },
+
+  initChart : function (canvas, width, height) {
+    const chart = echarts.init(canvas, null, {
+      width: width,
+      height: height
+    });
+    canvas.setChart(chart);
+
+    var option = {
+      title: {
+        text: '总体水位数据',
+        left: 'center'
+      },
+      color: ["#3656E6"],
+      // legend: {
+      //   data: ['A'],
+      //   top: 'center',
+      //   left: 'center',
+      //   backgroundColor: 'red',
+      //   z: 100
+      // },
+      grid: {
+        containLabel: true
+      },
+      tooltip: {
+        show: true,
+        trigger: 'axis'
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.data.MainWaterX,
+        // show: false
+      },
+      yAxis: {
+        x: 'center',
+        type: 'value',
+        splitLine: {
+          lineStyle: {
+            type: 'dashed'
+          }
+        }
+        // show: false
+      },
+      series: [{
+        name: 'A',
+        type: 'line',
+        smooth: true,
+        data: [18, 36, 65, 30, 78, 40, 33]
+      }
+      // , {
+      //   name: 'B',
+      //   type: 'line',
+      //   smooth: true,
+      //   data: [12, 50, 51, 35, 70, 30, 20]
+      // }, {
+      //   name: 'C',
+      //   type: 'line',
+      //   smooth: true,
+      //   data: [10, 30, 31, 50, 40, 20, 10]
+      // }
+      ]
+    };
+    chart.setOption(option);
+    return chart;
   }
 })

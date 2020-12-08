@@ -63,9 +63,58 @@
     </view>
 </view>
 
-<!--eacharts-->
-<view class="login-main">
-    
+<!--eachartsMain-->
+<view class="eachartsMain" wx:if="{{homeIndex==='map'}}">
+防汛地图
 </view>
+
+<view class="eachartsMain" wx:if="{{homeIndex==='predict'}}">
+    <text class="title1">未来3天整体汛情等级</text>
+    <text class="num1">一般</text>
+    <text class="num2">特别严重</text>
+    <text class="num3">严重</text>
+    <text class="text1">12月9日</text>
+    <text class="text2">12月9日</text>
+    <text class="text3">12月9日</text>
+    <text class="title2">未来水势</text>
+    <text class="num4">985</text>
+    <text class="num5">1145</text>
+    <text class="num6">320</text>
+    <text class="text4">mm</text>
+    <text class="text5">mm</text>
+    <text class="text6">mm</text>
+
+    <view class="text7">
+        <text>水位</text>
+        <image class="img"
+        mode="widthFix"
+        style="width:65%"
+        src="../../resource/icon/up_orange.png"
+        ></image>
+    </view>
+    <view class="text8">
+        <text>洪峰</text>
+        <image class="img"
+        mode="widthFix"
+        style="width:65%"
+        src="../../resource/icon/up_red.png"
+        ></image>
+    </view>
+    <view class="text9">
+        <text>流量</text>
+        <image class="img"
+        mode="widthFix"
+        style="width:65%"
+        src="../../resource/icon/down_green.png"
+        ></image>
+    </view>
+
+</view>
+
+<view class="eachartsMain" wx:if="{{homeIndex==='water'}}">
+  <ec-canvas class='water' id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecMainWater }}"></ec-canvas>
+</view>
+
+
 
 
