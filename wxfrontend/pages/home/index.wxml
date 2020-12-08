@@ -67,6 +67,25 @@
 <view class="eachartsMain" wx:if="{{homeIndex==='map'}}">
 防汛地图
 </view>
+<view class="newsMain" wx:if="{{homeIndex==='map'}}">
+    <button class="news_btn">最新动态</button>
+    <view class="news_card">
+        <image 
+            class="position_logo"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/position.png"
+        ></image>
+        <text class="news_place">江汉关</text>
+        <text class="news_content">水位上升至警戒线，预计影响周边5公里</text>
+        <image 
+            class="warning_logo"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/warning_orange.png"
+        ></image>
+    </view>
+</view>
 
 <view class="eachartsMain" wx:if="{{homeIndex==='predict'}}">
     <text class="title1">未来3天整体汛情等级</text>
