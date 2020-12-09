@@ -119,5 +119,4 @@ page {
     transform: translateX(-50%);
     background-color: white;
     border-radius: 15px;
-    border-radius: 15px;
 }

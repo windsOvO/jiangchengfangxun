@@ -17,13 +17,14 @@
     ></image>
     <text class="date">{{time}}</text>
     <van-dropdown-menu class="dropdown" active-color="#3656E6">
-        <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
-        <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+        <van-dropdown-item bind:change="onChangeType" value="{{ typeValue }}" options="{{ typeList }}" />
+        <van-dropdown-item bind:change="onChangePlace" value="{{ placeValue }}" options="{{ placeList }}" />
     </van-dropdown-menu>
 </view>
 
 <!--eacharts-->
 <view class="dataShow-main">
-    
+  <ec-canvas class = "ec" id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecData }}">
+  </ec-canvas>
 </view>
 
