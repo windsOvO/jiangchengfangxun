@@ -6,6 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
+    option1: [
+      { text: '离我最近', value: 0 },
+      { text: '汉口', value: 1 },
+      { text: '江汉', value: 2 },
+      { text: '江夏', value: 3 },
+      { text: '洪山', value: 4 },
+    ],
+    option2: [
+      { text: '水位', value: 'a' },
+      { text: '水势', value: 'b' },
+      { text: '降雨量', value: 'c' },
+    ],
+    value1: 0,
+    value2: 'a',
 
   },
 

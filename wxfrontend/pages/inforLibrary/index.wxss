@@ -102,6 +102,13 @@ page {
   left: 80%;
   transform: translateX(-50%);
 }
+.infor-card .search-bar{
+  position: absolute;
+  width: 100%;
+  bottom: 0%;
+  left:50%;
+  transform: translateX(-50%);
+}
 
 .infor-main {
     width: 90%;
@@ -111,5 +118,6 @@ page {
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
+    border-radius: 15px;
     border-radius: 15px;
 }

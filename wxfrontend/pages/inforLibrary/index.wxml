@@ -25,9 +25,14 @@
     <text class="text1">防汛组织</text>
     <text class="text2">隐患险情</text>
     <text class="text3">资源点</text>
-    <view class="search-bar">
-    
-    </view>
+    <van-search
+            class="search-bar"
+            value="{{ value }}"
+            shape="round"
+            background="#3656E6"
+            placeholder="请输入搜索关键词"
+    />
+
 </view>
 
 

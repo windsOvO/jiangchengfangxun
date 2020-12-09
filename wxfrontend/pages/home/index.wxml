@@ -127,7 +127,21 @@
         src="../../resource/icon/down_green.png"
         ></image>
     </view>
-
+</view>
+<view class="predict_notice" wx:if="{{homeIndex==='predict'}}">
+    <image 
+        class="notice_img"
+        mode="widthFix"
+        style="width:5%"
+        src="../../resource/icon/notice.png"
+    ></image>
+    <text class="notice_content">未来汛情形势严峻，请广大市民做好防汛准备！</text>
+    <button class="predict_btn">未来一周汛情预测</button>
+    <scroll-view scroll-with-animation="true" class="menu_box">
+    <view class="menu_body menu_body_cur{{predictPlaceListIndex}}" style="width:calc（168.75rpx*{{predictPlaceList.length}});">
+    <view class='menu_li' wx:for="{{predictPlaceList}}" data-type='{{index}}' bindtap='changePlace'>{{item}}</view>
+    </view>
+    </scroll-view>
 </view>
 
 <view class="eachartsMain" wx:if="{{homeIndex==='water'}}">

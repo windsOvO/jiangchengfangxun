@@ -41,13 +41,24 @@ page {
     color: #fff;
 }
 
+.dataShow-wrapper .dropdown {
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    top: 80%;
+    font-size:5px;
+    background-color:aqua;
+    border-radius: 50px; 
+}
+
 .dataShow-main {
     width: 90%;
-    height: 75%;
+    height: 50%;
     position: absolute;
-    top: 22%;
+    top: 35%;
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
     border-radius: 15px;
 }
+

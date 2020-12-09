@@ -9,6 +9,8 @@ Page({
    */
   data: {
     homeIndex:'map',
+    predictPlaceList:['长江', '汉江', '东湖','举水'],
+    predictPlaceListIndex: 0,
   },
 
   /**
@@ -154,5 +156,20 @@ Page({
     };
     chart.setOption(option);
     return chart;
-  }
+  },
+
+  //选择 切换地点菜单
+  changePlace: function (e) {
+    console.log(e)
+    let chooseNav = e.currentTarget.dataset.type;
+    let This = this;
+    if (chooseNav != This.data.predictPlaceListIndex) {
+      This.setData({
+        predictPlaceListIndex: chooseNav,
+      });
+
+      //This.initFun(); //初始化 / 清空 页面数据
+      //This.getListData(); //获取页面列表数据
+    }
+  },
 })
