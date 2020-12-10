@@ -2,6 +2,59 @@
 var util_time = require("../../utils/time.js");
 import * as echarts from '../../ec-canvas/echarts';
 
+function setOption(chart, xdata, ydata) {
+  const option = {
+    title: {
+      text: '你好呀,cl!',
+      left:'center',
+      textStyle: {
+        fontSize: 14,
+        color: '#696969'
+      },
+      top: '10rpx'
+    },
+    color: ["#006EFF", "#67E0E3", "#9FE6B8"],
+    grid: {
+      show: false,
+      containLable:true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap:false,
+      data: xdata,      //动态参数来
+      // axisLabel: {
+      //   interval: 5,   //x轴间隔多少显示刻度
+      //   formatter: function (value) {   //显示时间
+      //     var date = new Date(value * 1000);
+      //     var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+      //     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+      //     return h + m
+      //   },
+      //   fontSize: 8
+      // }
+    },
+    yAxis: {
+      x: 'center',
+      type: 'value',
+      // axisLabel: {
+      //   formatter: function (value) {
+      //     var val = value / 1000000000 + 'G';
+      //     return val
+      //   }
+      // }
+    },
+    series: [{
+      type: 'line',
+      data: ydata,    //y轴上的数据也是动态的，也作为参数传进来
+      smooth: true,
+      lineStyle: {
+        width: 1
+      }
+    }]
+  };
+  chart.setOption(option)
+}
+
 Page({
 
   /**
@@ -22,26 +75,32 @@ Page({
     ],
     typeValue: 'rainfall',
     placeValue: 'default',
+    dropdownOpen: 1,
+
+    ecX: ['周一', '周二', '周三'],
+    ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
+    ecData: {}
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     //获取当前时间
     var TIME = util_time.formatTimeForHome(new Date());
     this.setData({
       time: TIME,
     });
-    this.onChangeType({detail:this.data.typeValue})
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.oneComponent = this.selectComponent('#mychart-dom-line');
 
+    this.onChangeType({detail:this.data.typeValue})
   },
 
   /**
@@ -101,84 +160,78 @@ Page({
       ]
 
     this.setData({
-      placeList:list,
-      placeValue: list[0].value,
-      ecData: {
-        onInit: this.initChart
-      },
-      ecX: ['周一', '周二', '周三','周四','周五'],//时间
-      ecY: [18, 36, 65, 30, 78] //每个时间对应的水位
+      ecX: ['周一', '周二', '周三','周四'],//时间
+      ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
+      dropdownOpen:1
     })
 
+    this.getOption()
   },
 
   //切换站点
   //将{type=this.data.typeValue,place=e.detail}传给后端,
-  onChangePlace(e) {
+  onChangePlace (e) {
+
     console.log(e.detail);//站点码
-    console.log(this.data.typeValue);//数据类型
+    console.log(this.data.typeValue);
     
     this.setData({
-      ecX: ['周一', '周二', '周三'],//时间
-      ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
-      ecData: this.initChart,
+      ecX : ['周一', '周二', '周三'],
+      ecY : [18, 36, 65, 30, 78], //每个时间对应的水位
+      dropdownOpen:1
     })
 
-    console.log(this.data.ecX)
+    this.getOption()
+
   },
 
-  initChart: function (canvas, width, height) {
-    console.log('初始化啦！')
-    const chart = echarts.init(canvas, null, {
-      width: width,
-      height: height
+  //初始化图表
+  init_chart: function (xdata, ydata) {
+    let _this=this
+    _this.oneComponent.init((canvas, width, height) => {
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height,
+      });
+      setOption(chart, xdata, ydata)
+      _this.chart = chart;
+      return chart;
     });
-    canvas.setChart(chart);
-
-    var option = {
-      title: {
-        text: '表格名称',
-        left: 'center'
-      },
-      color: ["#3656E6"],
-      // legend: {
-      //   data: ['A'],
-      //   top: 'center',
-      //   left: 'center',
-      //   backgroundColor: 'red',
-      //   z: 100
-      // },
-      grid: {
-        containLabel: true
-      },
-      tooltip: {
-        show: true,
-        trigger: 'axis'
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.data.ecX,
-        // show: false
-      },
-      yAxis: {
-        x: 'center',
-        type: 'value',
-        splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          }
-        }
-        // show: false
-      },
-      series: [{
-        name: 'A',
-        type: 'line',
-        smooth: true,
-        data: this.data.ecY
-      }]
-    };
-    chart.setOption(option);
-    return chart;
   },
+
+  //给图表加上数据
+  getOption: function () {        
+    var _this = this;
+    // wx.request({
+    //   url: 'https://xxxxxxx.com',    //你请求数据的接口地址
+    //   method: 'POST',
+    //   header: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   data: {               //传的参数，这些都不用多说了吧
+    //     id: xxxx
+    //   },
+    //   success: function (res) {
+    //     //我这里就假设res.xdata和res.ydata是我们需要的数据，即在x轴和y轴展示的数据，记住一定是数组哦！
+    //     _this.init_chart(res.xdata, res.ydata)
+    //   }
+    // })
+    // let ecX= ['周一', '周二', '周三']
+    // let ecY=[18, 36, 65, 30, 78]//每个时间对应的水位
+
+    _this.init_chart(_this.data.ecX, _this.data.ecY)
+  },
+
+  onOpenMenu(e){
+    this.setData({
+      dropdownOpen: 0
+    })
+  },
+
+  onCloseMenu(e) {
+    this.setData({
+      dropdownOpen: 1
+    })
+  },
+  
 })

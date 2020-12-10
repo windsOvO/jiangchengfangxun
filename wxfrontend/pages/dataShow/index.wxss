@@ -52,20 +52,32 @@ page {
 }
 
 .dataShow-main {
-    width: 90%;
+    width: 100%;
     height: 50%;
     position: absolute;
-    top: 35%;
+    top: 40%;
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
     border-radius: 15px;
 }
 
-.dataShow-main .ec {
-  width: 100%;
+.dataShow-main .ec1{
+  width: 90%;
   height: 100%;
   position: absolute;
-  bottom: -00%;
+  left:50%;
+  transform: translateX(-50%);
+  bottom: 0%;
 }
+
+.dataShow-main .ec0{
+  width: 0%;
+  height: 0%;
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  bottom: 0%;
+}
+
 
