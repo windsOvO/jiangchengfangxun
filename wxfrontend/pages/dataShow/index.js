@@ -120,11 +120,11 @@ Page({
     
     this.setData({
       ecX: ['周一', '周二', '周三'],//时间
-      ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
+      ecY: [180, 36, 65, 30, 78], //每个时间对应的水位
       ecData: this.initChart,
     })
 
-    console.log(this.data.ecX)
+    console.log(this.data.ecY)
   },
 
   initChart: function (canvas, width, height) {
