@@ -96,6 +96,10 @@ page {
     background-color: white;
     border-radius: 15px;
 }
+.eachartsMain .watermap_img{
+    position: absolute;
+    top: 10%;
+}
 
 .newsMain {
     width: 90%;
@@ -108,7 +112,7 @@ page {
 
 .newsMain .news_btn {
   width: 25%;
-  margin-top: 10px;
+  margin-top: 25px;
   background-color: #3656E6;
   color: white;
   border-radius: 10px; 
@@ -124,31 +128,31 @@ page {
   font-size: 9px;
 }
 
-.newsMain .news_card {
+.newsMain .news_card1 {
     width: 100%;
     height: 25%;
     position: absolute;
-    top: 20%;
+    top: 25%;
     left:50%;
     transform: translateX(-50%);
     background-color: white;
     border-radius: 10px;
 }
 
-.newsMain .news_card .position_logo{
+.newsMain .news_card1 .position_logo{
     position: absolute;
     top: 13%;
     left: 10%;
     transform: translateX(-50%);
 }
-.newsMain .news_card .warning_logo{
+.newsMain .news_card1 .warning_logo{
     position: absolute;
     top: 13%;
     right: 10%;
     transform: translateX(-50%);
 }
 
-.newsMain .news_card .news_place{
+.newsMain .news_card1 .news_place{
     font-size: 14px;
     position: absolute;
     top: 13%;
@@ -156,12 +160,52 @@ page {
     transform: translateX(-50%);
 }
 
-.newsMain .news_card .news_content{
+.newsMain .news_card1 .news_content{
     font-size: 11px;
     position: absolute;
     bottom: 20%;
     left: 12%;
 }
+
+.newsMain .news_card0 {
+    width: 100%;
+    height: 25%;
+    position: absolute;
+    top: 55%;
+    left:50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.newsMain .news_card0 .position_logo{
+    position: absolute;
+    top: 13%;
+    left: 10%;
+    transform: translateX(-50%);
+}
+.newsMain .news_card0 .warning_logo{
+    position: absolute;
+    top: 13%;
+    right: 10%;
+    transform: translateX(-50%);
+}
+
+.newsMain .news_card0 .news_place{
+    font-size: 14px;
+    position: absolute;
+    top: 13%;
+    left: 22%;
+    transform: translateX(-50%);
+}
+
+.newsMain .news_card0 .news_content{
+    font-size: 11px;
+    position: absolute;
+    bottom: 20%;
+    left: 12%;
+}
+
 
 
 
@@ -190,16 +234,53 @@ page {
   left:50%;
   transform: translateX(-50%);
 }
-.eachartsMain .num1 {
+.eachartsMain .num10 {
   font-size:20px;
-  color:#3656E6;
+  color:#3ec652;
   font-weight:bold;
   position: absolute;
   top:18%;
   left: 20%;
   transform: translateX(-50%);
 }
-.eachartsMain .num2 {
+.eachartsMain .num11 {
+  font-size:20px;
+  color:#e8850d;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num12 {
+  font-size:20px;
+  color:#DC143C;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+
+.eachartsMain .num20 {
+  font-size:20px;
+  color: #3ec652;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num21 {
+  font-size:20px;
+  color: #e8850d;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num22 {
   font-size:20px;
   color: #DC143C;
   font-weight:bold;
@@ -208,9 +289,28 @@ page {
   left: 50%;
   transform: translateX(-50%);
 }
-.eachartsMain .num3 {
+
+.eachartsMain .num30 {
+  font-size:20px;
+  color: #3ec652;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 80%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num31 {
   font-size:20px;
   color: #e8850d;
+  font-weight:bold;
+  position: absolute;
+  top:18%;
+  left: 80%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num32 {
+  font-size:20px;
+  color: #DC143C;
   font-weight:bold;
   position: absolute;
   top:18%;
@@ -241,7 +341,16 @@ page {
   left: 80%;
   transform: translateX(-50%);
 }
-.eachartsMain .num4 {
+.eachartsMain .num40 {
+  font-size:20px;
+  color:#3ec652;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num41 {
   font-size:20px;
   color:#e8850d;
   font-weight:bold;
@@ -250,18 +359,63 @@ page {
   left: 20%;
   transform: translateX(-50%);
 }
-.eachartsMain .num5 {
+.eachartsMain .num42 {
   font-size:20px;
-  color: #ed2221;
+  color:#DC143C;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num50 {
+  font-size:20px;
+  color: #3ec652;
   font-weight:bold;
   position: absolute;
   top:63%;
   left: 50%;
   transform: translateX(-50%);
 }
-.eachartsMain .num6 {
+.eachartsMain .num51 {
+  font-size:20px;
+  color: #e8850d;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num52 {
+  font-size:20px;
+  color: #DC143C;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num60 {
   font-size:20px;
   color: #3ec652;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 80%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num61 {
+  font-size:20px;
+  color: #e8850d;
+  font-weight:bold;
+  position: absolute;
+  top:63%;
+  left: 80%;
+  transform: translateX(-50%);
+}
+.eachartsMain .num62 {
+  font-size:20px;
+  color: #e8850d;
   font-weight:bold;
   position: absolute;
   top:63%;
@@ -332,6 +486,15 @@ page {
   position: absolute;
   top: 5%;
   left: 110%;
+}
+
+.eachartsMain .ecWater {
+  width: 90%;
+  height: 100%;
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  bottom: 0%;
 }
 
 .predict_notice{
