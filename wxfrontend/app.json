@@ -1,48 +1,14 @@
 {
   "pages":[
-    "pages/home/index",
-    "pages/dataShow/index",
-    "pages/inforLibrary/index",
-    "pages/userPage/index"
+    "pages/index/index",
+    "pages/logs/logs"
   ],
-  "window": {
-    "backgroundTextStyle": "light",
+  "window":{
+    "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "江城防汛",
-    "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
   },
-  "sitemapLocation": "sitemap.json",
-  "tabBar": {
-    "color": "#25293E",
-    "selectedColor": "#3656E6",
-    "borderStyle": "white",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "selectedIconPath": "/resource/icon/home1.png",
-        "iconPath": "/resource/icon/home.png",
-        "pagePath": "pages/home/index",
-        "text": "首页"
-      },
-      {
-        "selectedIconPath": "/resource/icon/data1.png",
-        "iconPath": "/resource/icon/data.png",
-        "pagePath": "pages/dataShow/index",
-        "text": "数据总览"
-      },
-      {
-        "selectedIconPath": "/resource/icon/infor1.png",
-        "iconPath": "/resource/icon/infor.png",
-        "pagePath": "pages/inforLibrary/index",
-        "text": "信息库"
-      },
-      {
-        "selectedIconPath": "/resource/icon/user1.png",
-        "iconPath": "/resource/icon/user.png",
-        "pagePath": "pages/userPage/index",
-        "text": "用户"
-      }
-    ]
-  }
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }
