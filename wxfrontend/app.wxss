@@ -1,4 +1,10 @@
 /**app.wxss**/
+@import "style/comm/comm.wxss"; 
+@import "style/project/project.wxss"; 
+
+@import "style/skin.wxss"; 
+
+
 .container {
   height: 100%;
   display: flex;

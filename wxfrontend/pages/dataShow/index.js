@@ -180,8 +180,9 @@ Page({
       ecY : [18, 36, 65, 30, 78], //每个时间对应的水位
       dropdownOpen:1
     })
-
     this.getOption()
+
+    console.log(this.data.ecY)
 
   },
 

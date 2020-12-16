@@ -123,7 +123,7 @@ Page({
   onShow: function () {
 
     wx.request({
-      url: 'http://121.37.174.92:8080/api/getIndexData', //你请求数据的接口地址
+      url: 'https://www.windszzz.cn:9001/jcfxapi/getIndexData', //你请求数据的接口地址
       method: 'POST',
       header: {
         "Content-Type": "application/json"
