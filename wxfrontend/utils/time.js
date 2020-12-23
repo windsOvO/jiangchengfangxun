@@ -44,8 +44,6 @@ const formatTimeForPredict = date => {
   return [thisdate, nextdate, twodate]
 }
 
-
-
 module.exports = {
   formatTime: formatTime,
   formatDate:formatDate,

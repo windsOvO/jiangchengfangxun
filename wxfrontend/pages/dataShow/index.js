@@ -2,10 +2,26 @@
 var util_time = require("../../utils/time.js");
 import * as echarts from '../../ec-canvas/echarts';
 
-function setOption(chart, xdata, ydata) {
+function setOption(chart, xdata, ydata, ymin, ymax, title) {
+  console.log('max',ymax)
+  console.log('min', ymin)
+  let gap = (ymax - ymin).toFixed(2) /5.0;
+  gap = parseFloat(gap.toFixed(3));
+  if(gap==0) {
+    gap = 0.5
+    ymax = ymax + 0.5;
+    ymin = ymin - 0.5;
+  } else {
+    ymax = parseFloat(parseFloat(ymax + gap).toFixed(3));
+    ymin = ymin - gap;
+  }
+  console.log('相差值',gap)
+  console.log(ymax);
+  console.log(ymin);  
+
   const option = {
     title: {
-      text: '你好呀,cl!',
+      text: title,
       left:'center',
       textStyle: {
         fontSize: 14,
@@ -21,27 +37,22 @@ function setOption(chart, xdata, ydata) {
     xAxis: {
       type: 'category',
       boundaryGap:false,
-      data: xdata,      //动态参数来
-      // axisLabel: {
-      //   interval: 5,   //x轴间隔多少显示刻度
-      //   formatter: function (value) {   //显示时间
-      //     var date = new Date(value * 1000);
-      //     var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-      //     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
-      //     return h + m
-      //   },
-      //   fontSize: 8
-      // }
+      data: xdata,
+      axisLabel: { 
+        interval: 0, 
+        rotate: 40,
+        fontSize: 7
+      },
     },
     yAxis: {
-      x: 'center',
       type: 'value',
-      // axisLabel: {
-      //   formatter: function (value) {
-      //     var val = value / 1000000000 + 'G';
-      //     return val
-      //   }
-      // }
+
+      min: ymin,
+      max: ymax,
+      interval: gap,
+      axisLabel: {
+        fontSize: 7
+      },
     },
     series: [{
       type: 'line',
@@ -68,19 +79,18 @@ Page({
       { text: '降雨量', value: 'rainfall' },
     ],
     placeList: [
-      { text: '离我最近', value: 'default' },
+      { text: '离我最近', value: '' },
       { text: '汉口', value: '0161610010' },
       { text: '四合庄', value: '0161610040' },
       { text: '黄陂', value: '0161610050' },
     ],
-    typeValue: 'rainfall',
-    placeValue: 'default',
+    typeValue: 'river',
+    placeValue: '',
     dropdownOpen: 1,
 
-    ecX: ['周一', '周二', '周三'],
-    ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
+    ecX: [],
+    ecY: [], //每个时间对应的水位
     ecData: {}
-
   },
 
   /**
@@ -99,7 +109,6 @@ Page({
    */
   onReady: function () {
     this.oneComponent = this.selectComponent('#mychart-dom-line');
-
     this.onChangeType({detail:this.data.typeValue})
   },
 
@@ -149,23 +158,37 @@ Page({
   //将{type=e.detail,place=""}传给后端
     //需要返回placeList，数组类型，如下list；
     //需要返回默认站点代码string类型、默认站点名称string类型、横轴数据array类型（如ecX），纵轴数据array类型（如ecY所示）
+  
+  transformType (type) {
+    let dataType=0;
+    if (type=='lake') {
+      dataType = 0;
+    } else if (type == 'reservoir') {
+      dataType = 1;
+    } else if (type == 'river') {
+      dataType = 2;
+    } else if (type == 'rainfall') {
+      dataType = 3;
+    } else {
+      dataType = 0;
+    } 
+
+    return dataType;
+  },
     
   onChangeType (e) {
     console.log(e.detail);//数据类型
-  
-    let list = [
-      { text: '汉口', value: '0161610010' },
-      { text: '四合庄', value: '0161610040' },
-      { text: '黄陂', value: '0161610050' }
-      ]
+    let dataType = this.transformType(e.detail)
 
-    this.setData({
-      ecX: ['周一', '周二', '周三','周四'],//时间
-      ecY: [18, 36, 65, 30, 78], //每个时间对应的水位
-      dropdownOpen:1
-    })
-
-    this.getOption()
+    this.getOption(dataType,null).then((res) => {
+      console.log('哈哈哈异步成功啦！',res);
+      console.log('ecx',this.data.ecX);
+      this.setData({
+        dropdownOpen: 1,
+        typeValue: e.detail
+      })
+      this.init_chart();
+      });
   },
 
   //切换站点
@@ -174,53 +197,100 @@ Page({
 
     console.log(e.detail);//站点码
     console.log(this.data.typeValue);
-    
-    this.setData({
-      ecX : ['周一', '周二', '周三'],
-      ecY : [18, 36, 65, 30, 78], //每个时间对应的水位
-      dropdownOpen:1
-    })
-    this.getOption()
 
-    console.log(this.data.ecY)
+    let dataType = this.transformType(e.detail);
+    let placeCode = e.detail;
+
+    this.getOption(dataType, placeCode).then((res) => {
+      console.log('哈哈哈异步成功啦！', res);
+      console.log('ecx', this.data.ecX);
+      this.setData({
+        dropdownOpen: 1,
+        placeValue: e.detail,
+      });
+      this.init_chart();
+    });
 
   },
 
   //初始化图表
-  init_chart: function (xdata, ydata) {
+  init_chart: function () {
+    console.log('初始化图表啦！')
     let _this=this
     _this.oneComponent.init((canvas, width, height) => {
       const chart = echarts.init(canvas, null, {
         width: width,
         height: height,
       });
-      setOption(chart, xdata, ydata)
+      let ydata = _this.data.ecY
+      let ymax = Math.max.apply(Math, ydata);
+      let ymin = Math.min.apply(Math, ydata);
+
+      let places = this.data.placeList;
+      let datas = this.data.typeList;
+      let placeValue = this.data.placeValue;
+      let typeValue = this.data.typeValue;
+      let placeName = '';
+      let dataType = '';
+      places.map((item) => {
+        if (item.value == placeValue) {
+          placeName = item.text;
+        }
+      })
+      datas.map(item => {
+        if (item.value == typeValue) {
+          dataType = item.text;
+        }
+      })
+      console.log('数据类型', dataType);
+      console.log('站点名', placeName);
+      let title = '近七天'+placeName+'的'+dataType+'变化趋势图';
+      setOption(chart, _this.data.ecX, _this.data.ecY, ymin, ymax, title)
       _this.chart = chart;
       return chart;
     });
   },
 
   //给图表加上数据
-  getOption: function () {        
+  getOption: function (dataType,placeCode) {   
+    console.log("getOption!");     
     var _this = this;
-    // wx.request({
-    //   url: 'https://xxxxxxx.com',    //你请求数据的接口地址
-    //   method: 'POST',
-    //   header: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   data: {               //传的参数，这些都不用多说了吧
-    //     id: xxxx
-    //   },
-    //   success: function (res) {
-    //     //我这里就假设res.xdata和res.ydata是我们需要的数据，即在x轴和y轴展示的数据，记住一定是数组哦！
-    //     _this.init_chart(res.xdata, res.ydata)
-    //   }
-    // })
-    // let ecX= ['周一', '周二', '周三']
-    // let ecY=[18, 36, 65, 30, 78]//每个时间对应的水位
-
-    _this.init_chart(_this.data.ecX, _this.data.ecY)
+    let url = '';
+    if(placeCode){
+      url = 'https://www.windszzz.cn:9001/jcfxapi/getDataForShow?type=' + dataType + '&place=' + placeCode;
+    } else {
+      url = 'https://www.windszzz.cn:9001/jcfxapi/getDataForShow?type=' + dataType + '&place=';
+    }
+    return new Promise(function (resolve, reject){
+      wx.request({
+        url: url,
+        method: 'GET',
+        success: res => {
+          console.log('获取数据成功啦！');
+          console.log(res);
+          let formateX = res.data.ecX.map((date) => {
+            return date.slice(0, 10);
+          })
+          _this.setData({
+            ecX: formateX,
+            ecY: res.data.ecY
+          });
+          if(res.data.list){
+            _this.setData({
+              placeList: res.data.list,
+              placeValue: res.data.list[1].value
+            });
+          }
+          let result = res.data;
+          resolve(result);
+        },
+        fail: (res) => {
+          console.log('请求异常！');
+          console.log(res); 
+          reject("系统异常，请重试！");
+        }
+      });
+    });
   },
 
   onOpenMenu(e){
