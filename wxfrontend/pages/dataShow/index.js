@@ -84,7 +84,7 @@ Page({
       { text: '四合庄', value: '0161610040' },
       { text: '黄陂', value: '0161610050' },
     ],
-    typeValue: 'river',
+    typeValue: 'lake',
     placeValue: '',
     dropdownOpen: 1,
 
@@ -206,7 +206,7 @@ Page({
       console.log('ecx', this.data.ecX);
       this.setData({
         dropdownOpen: 1,
-        placeValue: e.detail,
+        placeValue: e.detail
       });
       this.init_chart();
     });
@@ -278,7 +278,7 @@ Page({
           if(res.data.list){
             _this.setData({
               placeList: res.data.list,
-              placeValue: res.data.list[1].value
+              placeValue: res.data.list[0].value
             });
           }
           let result = res.data;

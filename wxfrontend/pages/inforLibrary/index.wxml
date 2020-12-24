@@ -2,12 +2,14 @@
 <view class="infor-wrapper">
     <view class="title">
         <text class="text">防汛信息库</text>
+        <!--
         <image 
             class="loading"
             mode="widthFix"
             style="width:30%"
             src="../../resource/icon/loading.png"
         ></image>
+        -->
     </view>
     <image 
         class="calendar"
@@ -29,14 +31,83 @@
             class="search-bar"
             value="{{ value }}"
             shape="round"
-            background="#3656E6"
-            placeholder="请输入搜索关键词"
+            placeholder="搜索防汛组织信息"
     />
-
 </view>
-
-
-<view class="dataShow-main">
-    
+<view class="infor-main">
+    <image 
+        class="org_pic"
+        mode="widthFix"
+        style="width:6%"
+        src="../../resource/icon/org1.png"
+    ></image>
+    <text class="org_data">防汛组织信息</text>
+    <view class="orgInfo_card1">
+        <image 
+            class="position_logo"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/place.png"
+        ></image>
+        <text class="news_place">站点20204568(汉口)</text>
+        <image
+            class="warning_logo1"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/phone.png"
+        ></image>
+        <image
+            class="warning_logo2"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/warning_red.png"
+        ></image>
+        <text class="num1">45</text>
+        <text class="num2">30</text>
+        <text class="num3">严重</text>
+        <text class="num4">890</text>
+        <text class="text1">站点人数</text>
+        <text class="text2">防汛设备</text>
+        <text class="text3">防汛等级</text>
+        <text class="text4">站点水位</text>
+    </view>
+    <view class="orgInfo_card2">
+        <image 
+            class="position_logo"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/place.png"
+        ></image>
+        <text class="news_place">站点20204568(汉口)</text>
+        <image
+            class="warning_logo1"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/phone.png"
+        ></image>
+        <image
+            class="warning_logo2"
+            mode="widthFix"
+            style="width:6%"
+            src="../../resource/icon/safe.png"
+        ></image>
+        <text class="num1">23</text>
+        <text class="num2">69</text>
+        <text class="num3">正常</text>
+        <text class="num4">560</text>
+        <text class="text1">站点人数</text>
+        <text class="text2">防汛设备</text>
+        <text class="text3">防汛等级</text>
+        <text class="text4">站点水位</text>
+    </view>   
+</view>
+<view class="readMore">
+    <text class='txt'>查看更多</text>
+    <image 
+        class="pic"
+        mode="widthFix"
+        style="width:7%"
+        src="../../resource/icon/moreinfo.png"
+    ></image>
 </view>
 

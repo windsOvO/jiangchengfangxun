@@ -2,10 +2,26 @@
 import * as echarts from '../../ec-canvas/echarts';
 var util_time=require("../../utils/time.js");
 
-function setOption(chart, xdata, ydata) {
+function setOption(chart, xdata, ydata, ymin, ymax, title) {
+  console.log('max', ymax)
+  console.log('min', ymin)
+  let gap = (ymax - ymin).toFixed(3) / 5.0;
+  gap = parseFloat(gap.toFixed(3));
+  if (gap == 0) {
+    gap = 0.5
+    ymax = ymax + 0.5;
+    ymin = ymin - 0.5;
+  } else {
+    ymax = parseFloat(parseFloat(ymax + gap).toFixed(3));
+    ymin = parseFloat(parseFloat(ymin - gap).toFixed(3));
+  }
+  console.log('相差值', gap)
+  console.log(ymax);
+  console.log(ymin);
+
   const option = {
     title: {
-      text: '你好呀,cl!',
+      text: title,
       left: 'center',
       textStyle: {
         fontSize: 14,
@@ -21,27 +37,21 @@ function setOption(chart, xdata, ydata) {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: xdata,      //动态参数来
-      // axisLabel: {
-      //   interval: 5,   //x轴间隔多少显示刻度
-      //   formatter: function (value) {   //显示时间
-      //     var date = new Date(value * 1000);
-      //     var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-      //     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
-      //     return h + m
-      //   },
-      //   fontSize: 8
-      // }
+      data: xdata,
+      axisLabel: {
+        interval: 0,
+        rotate: 40,
+        fontSize: 7
+      },
     },
     yAxis: {
-      x: 'center',
       type: 'value',
-      // axisLabel: {
-      //   formatter: function (value) {
-      //     var val = value / 1000000000 + 'G';
-      //     return val
-      //   }
-      // }
+      min: ymin,
+      max: ymax,
+      interval: gap,
+      axisLabel: {
+        fontSize: 7
+      },
     },
     series: [{
       type: 'line',
@@ -96,7 +106,6 @@ Page({
     //获取当前时间
     var timeForCal = util_time.formatTimeForHome(new Date());
     console.log(timeForCal)
-
     var predictDatas = util_time.formatTimeForPredict(new Date());
     console.log(predictDatas)
     this.setData({
@@ -114,7 +123,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -122,28 +130,13 @@ Page({
    */
   onShow: function () {
 
-    wx.request({
-      url: 'https://www.windszzz.cn:9001/jcfxapi/getIndexData', //你请求数据的接口地址
-      method: 'POST',
-      header: {
-        "Content-Type": "application/json"
-      },
-      // data: {               //传的参数，这些都不用多说了吧
-      //   id: xxxx
-      // },
-      success: function (res) {
-        //我这里就假设res.xdata和res.ydata是我们需要的数据，即在x轴和y轴展示的数据，记住一定是数组哦！
-        console.log('res',res)
-      }
-    })
-
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    
   },
 
   /**
@@ -179,69 +172,95 @@ Page({
     this.setData({
       homeIndex:e.currentTarget.dataset.index
     });
+    console.log('hhhhh我在bthome',this.data.ecX)
+    console.log('ecY', this.data.ecY)
+    let formateX = this.data.ecX.map((date) => {
+      return date.slice(0, 10);
+    })
+    this.setData({
+      ecX:formateX
+    })
     //调用接口：传递homeIndex参数，返回页面所需要的数据
     if(this.data.homeIndex==='water'){
-
-
       this.oneComponent = this.selectComponent('.ecWater');
-
       let that = this;
       console.log(that.oneComponent)
 
       this.getOption()
-
     }
+  },
+
+  getData() {
+    let _this=this;
+    return new Promise(function (resolve, reject) {
+      wx.request({
+        url: 'https://www.windszzz.cn:9001/jcfxapi/getIndexData',
+        method: 'GET',
+        success: res => {
+          console.log('获取数据成功啦！');
+          console.log(res);
+          _this.setData({
+            ecY: res.data.ecY
+          });
+          console.log('hhhhhh,我在promise',_this.data.ecX);
+          let result = res.data;
+          resolve(result);
+        },
+        fail: (res) => {
+          console.log('请求异常！');
+          console.log(res);
+          reject("系统异常，请重试！");
+        }
+      });
+    });
   },
 
   //初始化数据
   initData:function(){
-    let data={
-      predictLevels: [0,1,2], //汛情等级：0一般，1严重，2特别严重
-      predictWater:100, //水位
-      predictTop:1000, //洪峰
-      predictFlow: 520, //流量
-      newsList: [//[地点、消息内容、等级]  //等级0通知，1警告,2严重警告
-        ['江汉关', '水位已漫过警戒线，附近居民迅速撤离', 2], 
-        ['楚河汉街', '水位上升至警戒线', 1]
-        ] ,
-      ecX: ['12月10日', '12月11日', '12月12日', '12月13日', '12月14日', '12月15日', '12月16日'],
-      ecY:[23,56,29,90,12,56,34]
-    }
+    this.getData().then((res) => {
+      console.log('我在initData', res);
+      this.assignData(res);
+    })
+  },
 
-    let level=[]
-    for(let i =0;i<data.predictLevels.length;i++){
-      if (data.predictLevels[i]===0){
-        level[i]='一般'
+  assignData (data) {
+    console.log('hhhh我是assignData',this.data.ecX);
+    let level = []
+    for (let i = 0; i < data.predictLevels.length; i++) {
+      if (data.predictLevels[i] === 4) {
+        level[i] = '正常'
+      } else if (data.predictLevels[i] === 0) {
+        level[i] = '不严重'
       } else if (data.predictLevels[i] === 1) {
         level[i] = '严重'
       } else {
         level[i] = '很严重'
-      } 
+      }
     }
 
     let wlLevel = 0;
     let wtLevel = 0;
     let flowLevel = 0;
-    
-    if(data.predictWater<400){
+
+    if (data.predictWater < 700) {
       wlLevel = 0
-    } else if (data.predictWater < 1000){
+    } else if (data.predictWater < 800) {
       wlLevel = 1
     } else {
       wlLevel = 2
     }
 
-    if (data.predictTop < 400) {
+    if (data.predictTop < 700) {
       wtLevel = 0
-    } else if (data.predictTop < 1000) {
+    } else if (data.predictTop < 800) {
       wtLevel = 1
     } else {
       wtLevel = 2
     }
 
-    if (data.predictFlow < 400) {
+    if (data.predictFlow < 700) {
       flowLevel = 0
-    } else if (data.predictTop < 1000) {
+    } else if (data.predictTop < 800) {
       flowLevel = 1
     } else {
       flowLevel = 2
@@ -258,24 +277,29 @@ Page({
       wlLevel: wlLevel,
       wtLevel: wtLevel,
       flowLevel: flowLevel,
-      newsList:data.newsList,
+      newsList: data.newsList,
       ecX: data.ecX,
-      ecY: data.ecY, 
+      ecY: data.ecY,
     })
 
-    console.log(this.data.levelText)
-
+    console.log('level', this.data.levelText)
   },
 
   //初始化图表
-  init_chart: function (xdata, ydata) {
+  init_chart: function () {
+    console.log('hhhh,我在init_chart',this.data.ecX)
     let _this = this
     _this.oneComponent.init((canvas, width, height) => {
       const chart = echarts.init(canvas, null, {
         width: width,
         height: height,
       });
-      setOption(chart, xdata, ydata)
+      let ydata = _this.data.ecY
+      let ymax = Math.max.apply(Math, ydata);
+      let ymin = Math.min.apply(Math, ydata);
+
+      let title = '未来三天总体水位变化趋势预测';
+      setOption(chart, _this.data.ecX, _this.data.ecY, ymin, ymax, title)
       _this.chart = chart;
       return chart;
     });
@@ -283,26 +307,10 @@ Page({
 
   //给图表加上数据
   getOption: function () {
+    console.log('hhhh,我在getoption',this.data.ecX)
     console.log('getOption')
     var _this = this;
-    // wx.request({
-    //   url: 'https://xxxxxxx.com',    //你请求数据的接口地址
-    //   method: 'POST',
-    //   header: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   data: {               //传的参数，这些都不用多说了吧
-    //     id: xxxx
-    //   },
-    //   success: function (res) {
-    //     //我这里就假设res.xdata和res.ydata是我们需要的数据，即在x轴和y轴展示的数据，记住一定是数组哦！
-    //     _this.init_chart(res.xdata, res.ydata)
-    //   }
-    // })
-    // let ecX= ['周一', '周二', '周三']
-    // let ecY=[18, 36, 65, 30, 78]//每个时间对应的水位
-
-    _this.init_chart(_this.data.ecX, _this.data.ecY)
+    _this.init_chart()
   },
 
   //选择 切换地点菜单

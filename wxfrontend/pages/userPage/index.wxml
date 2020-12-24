@@ -23,8 +23,8 @@
 			</view>
 
 			<view class="detail" wx:if="{{!user.USER_NAME}}" bindtap="url" data-url="/pages/reg/reg_step1">
-				<view class="name">注册 / 登录</view> 
-				<view class="desc"><view class="text-white">注册马上使用更多功能</view></view>
+				<view class="name">你好</view> 
+				<view class="desc"><view class="text-white">欢迎使用武汉防汛小程序</view></view>
 			</view>
 		</view> 
 
@@ -34,9 +34,9 @@
 	<!--down area begin-->
 	<view class="down">
 		<view class="data shadow-warp"> 
-			<view bindtap="url" data-url="../fav/my_fav_me"><text class="num">{{user.USER_FAV_CNT || 0}}</text><text class="txt">关注我</text></view> 
-			<view bindtap="url" data-url="../info/my_info"><text class="num">{{user.USER_INFO_CNT || 0}}</text><text class="txt">我的关注</text></view>
-			<view bindtap="url" data-url="../meet/my_meet"><text class="num">{{user.USER_MEET_CNT || 0}}</text><text class="txt">我的发布</text></view>
+			<view bindtap="url" data-url="../fav/my_fav_me"><text class="num">{{user.USER_FAV_CNT || 0}}</text><text class="txt">关注站点</text></view> 
+			<view bindtap="url" data-url="../info/my_info"><text class="num">{{user.USER_INFO_CNT || 0}}</text><text class="txt">我的发布</text></view>
+			<view bindtap="url" data-url="../meet/my_meet"><text class="num">{{user.USER_MEET_CNT || 0}}</text><text class="txt">常用位置</text></view>
 		</view>
 
 		<!--base begin -->

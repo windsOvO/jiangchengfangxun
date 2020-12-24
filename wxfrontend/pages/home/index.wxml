@@ -82,21 +82,21 @@
             style="width:6%"
             src="../../resource/icon/position.png"
         ></image>
-        <text class="news_place">{{item[0]}}</text>
-        <text class="news_content">{{item[1]}}</text>
-        <image wx:if="{{item[2]===0}}"
+        <text class="news_place">{{item.location}}</text>
+        <text class="news_content">{{item.content}}</text>
+        <image wx:if="{{item.level===0}}"
             class="warning_logo"
             mode="widthFix"
             style="width:6%"
             src="../../resource/icon/warning_green.png"
         ></image>
-        <image wx:if="{{item[2]===1}}"
+        <image wx:if="{{item.level===1}}"
             class="warning_logo"
             mode="widthFix"
             style="width:6%"
             src="../../resource/icon/warning_orange.png"
         ></image>
-        <image wx:if="{{item[2]===2}}"
+        <image wx:if="{{item.level===2}}"
             class="warning_logo"
             mode="widthFix"
             style="width:6%"
@@ -123,12 +123,12 @@
 
     <view class="text7">
         <text>水位</text>
-        <image wx:if="{{waterLevel < 400}}" class="img"
+        <image wx:if="{{waterLevel < 700}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/down_green.png"
         ></image>
-        <image wx:elif="{{waterLevel < 1000}}" class="img"
+        <image wx:elif="{{waterLevel < 800}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/up_orange.png"
@@ -141,12 +141,12 @@
     </view>
     <view class="text8">
         <text>洪峰</text>
-        <image wx:if="{{waterTop < 400}}" class="img"
+        <image wx:if="{{waterTop < 700}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/down_green.png"
         ></image>
-        <image wx:elif="{{waterTop < 1000}}" class="img"
+        <image wx:elif="{{waterTop < 800}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/up_orange.png"
@@ -159,12 +159,12 @@
     </view>
     <view class="text9">
         <text>流量</text>
-        <image wx:if="{{flow < 400}}" class="img"
+        <image wx:if="{{flow < 700}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/down_green.png"
         ></image>
-        <image wx:elif="{{flow < 1000}}" class="img"
+        <image wx:elif="{{flow < 800}}" class="img"
         mode="widthFix"
         style="width:65%"
         src="../../resource/icon/up_orange.png"
@@ -184,7 +184,14 @@
         src="../../resource/icon/notice.png"
     ></image>
     <text class="notice_content">未来汛情形势严峻，请广大市民做好防汛准备！</text>
-    <button class="predict_btn">未来一周汛情预测</button>
+</view>
+
+<view class="eachartsMain" wx:if="{{homeIndex==='water'}}">
+    <ec-canvas class ="ecWater" canvas-id="mychart-home-line" ec="{{ ecData }}">
+    </ec-canvas>
+</view>
+<view class="eachartsLake" wx:if="{{homeIndex==='water'}}">
+    <button class="predict_btn">主要河流水位预测</button>
     <scroll-view scroll-with-animation="true" class="menu_box">
     <view class="menu_body menu_body_cur{{predictPlaceListIndex}}" style="width:calc（168.75rpx*{{predictPlaceList.length}});">
     <view class='menu_li' wx:for="{{predictPlaceList}}" data-type='{{index}}' bindtap='changePlace'>{{item}}</view>
@@ -192,10 +199,6 @@
     </scroll-view>
 </view>
 
-<view class="eachartsMain" wx:if="{{homeIndex==='water'}}">
-    <ec-canvas class ="ecWater" canvas-id="mychart-line" ec="{{ ecData }}">
-    </ec-canvas>
-</view>
 
 
 
