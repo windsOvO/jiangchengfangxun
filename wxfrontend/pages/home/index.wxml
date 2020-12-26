@@ -69,7 +69,7 @@
         class="watermap_img"
         mode="widthFix"
         style="width:100%"
-        src="../../resource/waterMap.png"
+        src="https://www.windszzz.cn:9001/picture/waterMap.png"
     ></image>
 </view>
 <view class="newsMain" wx:if="{{homeIndex==='map'}}">

@@ -24,7 +24,7 @@
 
 			<view class="detail" wx:if="{{!user.USER_NAME}}" bindtap="url" data-url="/pages/reg/reg_step1">
 				<view class="name">你好</view> 
-				<view class="desc"><view class="text-white">欢迎使用武汉防汛小程序</view></view>
+				<view class="desc"><view class="text-white">欢迎使用江城防汛小程序</view></view>
 			</view>
 		</view> 
 
